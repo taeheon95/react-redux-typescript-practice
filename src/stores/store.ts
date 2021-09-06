@@ -1,12 +1,13 @@
 import createSagaMiddleware from "@redux-saga/core";
 import { configureStore } from "@reduxjs/toolkit";
 import contactListReducer from "./modules/contactList/contactList";
+import CounterReducer from "./modules/counter/counter";
 import rootSaga from "./rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
-  reducer: { contactList: contactListReducer },
+  reducer: { contactList: contactListReducer, counter: CounterReducer },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({ thunk: false }),
     sagaMiddleware,
