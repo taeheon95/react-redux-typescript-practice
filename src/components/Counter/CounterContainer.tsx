@@ -1,18 +1,21 @@
 import React, { PureComponent } from "react";
-import { CounterProps } from ".";
+import { CounterProps } from "./index";
 import CounterPresenter from "./CounterPresenter";
 
 interface State {
   amount: number;
 }
 
-export class CounterContainer extends PureComponent<CounterProps> {
-  state: State = {
-    amount: 0,
-  };
+export class CounterContainer extends PureComponent<CounterProps, State> {
+  constructor(props: CounterProps) {
+    super(props);
+    this.state = {
+      amount: 0,
+    };
+  }
 
   handleAmount(value: number) {
-    this.setState({ amount: value });
+    this.setState((state) => ({ amount: value }));
   }
 
   handleIncrease() {
@@ -44,13 +47,13 @@ export class CounterContainer extends PureComponent<CounterProps> {
       <CounterPresenter
         counterValue={this.props.counterValue}
         amount={this.state.amount}
-        handleAmount={this.handleAmount}
-        increase={this.handleIncrease}
-        decrease={this.handleDecrease}
-        increaseBy={this.handleIncreaseBy}
-        decreaseBy={this.handleDecreaseBy}
-        increaseByAsync={this.handleIncreaseByAsync}
-        decreaseByAsync={this.handleDecreaseByAsync}
+        handleAmount={this.handleAmount.bind(this)}
+        increase={this.handleIncrease.bind(this)}
+        decrease={this.handleDecrease.bind(this)}
+        increaseBy={this.handleIncreaseBy.bind(this)}
+        decreaseBy={this.handleDecreaseBy.bind(this)}
+        increaseByAsync={this.handleIncreaseByAsync.bind(this)}
+        decreaseByAsync={this.handleDecreaseByAsync.bind(this)}
       />
     );
   }

@@ -31,9 +31,32 @@ const contactList = createSlice({
     getContactList: (state) => {
       state.status = "loading";
     },
+
+    addContact: (state, action: PayloadAction<Contact>) => {
+      state.contactList.push(action.payload);
+    },
+
+    updateContactList: (state, action: PayloadAction<Contact>) => {
+      const contactIndex = state.contactList.findIndex(
+        (contact) => contact.id === action.payload.id
+      );
+      state.contactList.splice(contactIndex, 1, action.payload);
+    },
+
+    deleteContact: (state, action: PayloadAction<number>) => {
+      const contactIndex = state.contactList.findIndex(
+        (contact) => contact.id === action.payload
+      );
+      state.contactList.splice(contactIndex, 1);
+    },
   },
 });
 
-export const { getContactListSuccess, getContactList, getContactListFailed } =
-  contactList.actions;
+export const {
+  getContactListSuccess,
+  getContactList,
+  getContactListFailed,
+  addContact,
+  updateContactList,
+} = contactList.actions;
 export default contactList.reducer;

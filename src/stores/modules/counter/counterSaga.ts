@@ -3,27 +3,23 @@ import { fetchCount } from "../../../apis/counterAPI";
 import {
   decreaseBy,
   decreaseByAsync,
-  endAsync,
+  DECREASE_BY_ASYNC,
   increaseBy,
   increaseByAsync,
-  startAsync,
+  INCREASE_BY_ASYNC,
 } from "./counter";
 
-function* counterAddSync(amount?: number) {
-  yield put(startAsync());
-  const response: { data: number } = yield call(fetchCount, amount);
+function* counterAddSync(action: ReturnType<typeof increaseByAsync>) {
+  const response: { data: number } = yield call(fetchCount, action.payload);
   yield put(increaseBy(response.data));
-  yield put(endAsync());
 }
 
-function* counterSubSync(amount?: number) {
-  yield put(startAsync());
-  const response: { data: number } = yield call(fetchCount, amount);
+function* counterSubSync(action: ReturnType<typeof decreaseByAsync>) {
+  const response: { data: number } = yield call(fetchCount, action.payload);
   yield put(decreaseBy(response.data));
-  yield put(endAsync());
 }
 
 export function* counterSaga() {
-  yield takeEvery(increaseByAsync, counterAddSync);
-  yield takeEvery(decreaseByAsync, counterSubSync);
+  yield takeEvery(INCREASE_BY_ASYNC, counterAddSync);
+  yield takeEvery(DECREASE_BY_ASYNC, counterSubSync);
 }

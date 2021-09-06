@@ -12,10 +12,10 @@ const initialState: CounterState = {
 
 const INCREASE = "counter/INCREASE" as const;
 const DECREASE = "counter/DECREASE" as const;
-const INCREASE_BY = "counter/INCREASE_BY" as const;
-const DECREASE_BY = "counter/DECREASE_BY" as const;
-const INCREASE_BY_ASYNC = "counter/INCREASE_BY_ASYNC" as const;
-const DECREASE_BY_ASYNC = "counter/DECREASE_BY_ASYNC" as const;
+export const INCREASE_BY = "counter/INCREASE_BY" as const;
+export const DECREASE_BY = "counter/DECREASE_BY" as const;
+export const INCREASE_BY_ASYNC = "counter/INCREASE_BY_ASYNC" as const;
+export const DECREASE_BY_ASYNC = "counter/DECREASE_BY_ASYNC" as const;
 const START_ASYNC = "counter/START_ASYNC" as const;
 const END_ASYNC = "counter/END_ASYNC" as const;
 
@@ -75,6 +75,7 @@ const CounterReducer: Reducer<CounterState, CounterAction> = (
     case DECREASE:
       return { ...state, value: state.value - 1 };
     case INCREASE_BY:
+      console.log(action);
       return { ...state, value: state.value + action.payload };
     case DECREASE_BY:
       return { ...state, value: state.value - action.payload };
