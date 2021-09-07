@@ -36,6 +36,10 @@ const contactList = createSlice({
       state.contactList.push(action.payload);
     },
 
+    setter: (state, action: PayloadAction<Contact[]>) => {
+      state.contactList = action.payload;
+    },
+
     updateContactList: (state, action: PayloadAction<Contact>) => {
       const contactIndex = state.contactList.findIndex(
         (contact) => contact.id === action.payload.id
@@ -58,5 +62,7 @@ export const {
   getContactListFailed,
   addContact,
   updateContactList,
+  deleteContact,
+  setter,
 } = contactList.actions;
 export default contactList.reducer;

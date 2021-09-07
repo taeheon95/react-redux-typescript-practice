@@ -17,3 +17,8 @@ export const updateContact = async (contact: Contact) => {
   const response = await axios.put(url, contact);
   return response.data;
 };
+
+export const removeContact = async (id: number) => {
+  const response = await axios.delete(`${url}/${id}`);
+  return response.status === 200;
+};
