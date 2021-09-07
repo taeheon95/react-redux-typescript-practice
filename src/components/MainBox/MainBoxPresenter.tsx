@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import ContactDetail from "../ContactDetail";
+import ContactList from "../ContactList";
 
 const Box = styled.div`
   display: flex;
@@ -36,7 +38,14 @@ const DelButton = styled(CircleButton)`
 `;
 
 function MainBoxPresenter() {
-  return <div></div>;
+  return (
+    <Box>
+      <AddButton>+</AddButton>
+      <DelButton>-</DelButton>
+      <ContactList />
+      <ContactDetail />
+    </Box>
+  );
 }
 
 export default MainBoxPresenter;

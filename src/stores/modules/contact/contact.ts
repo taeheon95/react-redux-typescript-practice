@@ -38,7 +38,9 @@ const contact = createSlice({
   initialState,
   reducers: {
     setEditContact: (state, action: PayloadAction<Contact>) => {
-      state = action.payload;
+      Object.entries(action.payload).forEach(
+        (entry) => (state[entry[0]] = entry[1])
+      );
     },
     editContact: (
       state,

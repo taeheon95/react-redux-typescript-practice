@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import contact from "./modules/contact/contact";
 import contactListReducer from "./modules/contactList/contactList";
 import CounterReducer from "./modules/counter/counter";
+import keyword from "./modules/keyword";
 import rootSaga from "./rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -12,6 +13,7 @@ export const store = configureStore({
     contactList: contactListReducer,
     counter: CounterReducer,
     contact: contact,
+    keyword: keyword,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({ thunk: false }),

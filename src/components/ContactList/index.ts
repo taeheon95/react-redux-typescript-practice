@@ -6,6 +6,7 @@ import ContactListContainer from "./ContactListContainer";
 
 const mapStateToProps = (state: RootState) => ({
   contactList: state.contactList.contactList,
+  keyword: state.keyword.keyword,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
@@ -14,6 +15,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
 
 export interface Props {
   contactList: Contact[];
+  keyword: string;
   getContactList: () => void;
 }
 
