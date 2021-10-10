@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../stores/hooks";
+import { useAppSelector } from "../../stores/hooks";
 import ContactDetailContainer from "./ContactDetailContainer";
 import Empty from "./Empty";
 

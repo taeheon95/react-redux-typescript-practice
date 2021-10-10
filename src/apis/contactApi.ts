@@ -20,5 +20,5 @@ export const updateContact = async (contact: Contact) => {
 
 export const removeContact = async (id: number) => {
   const response = await axios.delete(`${url}/${id}`);
-  return response.status === 200;
+  return response.data;
 };

@@ -14,8 +14,8 @@ export class CounterContainer extends PureComponent<CounterProps, State> {
     };
   }
 
-  handleAmount(value: number) {
-    this.setState((state) => ({ amount: value }));
+  handleAmount(e:React.ChangeEvent<HTMLInputElement>) {
+    this.setState((state) => ({ ...state, amount: Number(e.target.value) }));
   }
 
   handleIncrease() {

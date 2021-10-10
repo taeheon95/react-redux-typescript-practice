@@ -51,4 +51,4 @@ function ContactDetailPresenter({ contact }: { contact: Contact }) {
   );
 }
 
-export default ContactDetailPresenter;
+export default React.memo(ContactDetailPresenter);

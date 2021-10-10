@@ -3,7 +3,7 @@ import React from "react";
 interface Props {
   counterValue: number;
   amount: number;
-  handleAmount: (amount: number) => void;
+  handleAmount: (e:React.ChangeEvent<HTMLInputElement>) => void;
   increase: () => void;
   decrease: () => void;
   increaseBy: () => void;
@@ -30,20 +30,20 @@ function CounterPresenter(props: Props) {
       <input
         value={props.amount}
         type="number"
-        onChange={(e) => handleAmount(Number(e.target.value))}
+        onChange={handleAmount}
       />
       <br />1 씩 증감 :<button onClick={(e) => increase()}>+</button>
-      <button onClick={(e) => decrease()}>-</button>
+      <button onClick={decrease}>-</button>
       <br />
       {props.amount} 씩 동기 증감 :
-      <button onClick={(e) => increaseBy()}>+</button>
-      <button onClick={(e) => decreaseBy()}>-</button>
+      <button onClick={increaseBy}>+</button>
+      <button onClick={decreaseBy}>-</button>
       <br />
       {props.amount} 씩 비동기 증감 :
-      <button onClick={(e) => increaseByAsync()}>+</button>
-      <button onClick={(e) => decreaseByAsync()}>-</button>
+      <button onClick={increaseByAsync}>+</button>
+      <button onClick={decreaseByAsync}>-</button>
     </>
   );
 }
 
-export default CounterPresenter;
+export default React.memo(CounterPresenter);

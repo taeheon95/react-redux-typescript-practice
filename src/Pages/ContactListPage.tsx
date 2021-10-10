@@ -1,6 +1,4 @@
-import React from "react";
 import styled from "styled-components";
-import ContactList from "../components/ContactList";
 import MainBox from "../components/MainBox";
 
 const MainContainer = styled.div`

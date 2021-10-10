@@ -6,7 +6,7 @@ import {
 } from "../../stores/modules/contact/contact";
 import {
   deleteContact,
-  updateContactList,
+  updateContact,
 } from "../../stores/modules/contactList/contactList";
 import { Contact } from "../../types";
 import MainBoxPresenter from "./MainBoxPresenter";
@@ -32,7 +32,7 @@ function MainBoxContainer() {
 
   const contactUpdate = useCallback(
     (contact: Contact) => {
-      dispatch(updateContactList(contact));
+      dispatch(updateContact(contact));
     },
     [dispatch]
   );

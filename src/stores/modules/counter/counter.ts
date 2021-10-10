@@ -1,4 +1,5 @@
-import { Reducer } from "redux";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { fetchCount } from "../../../apis/counterAPI";
 
 export interface CounterState {
   value: number;
@@ -10,82 +11,65 @@ const initialState: CounterState = {
   status: "idle",
 };
 
-const INCREASE = "counter/INCREASE" as const;
-const DECREASE = "counter/DECREASE" as const;
-export const INCREASE_BY = "counter/INCREASE_BY" as const;
-export const DECREASE_BY = "counter/DECREASE_BY" as const;
-export const INCREASE_BY_ASYNC = "counter/INCREASE_BY_ASYNC" as const;
-export const DECREASE_BY_ASYNC = "counter/DECREASE_BY_ASYNC" as const;
-const START_ASYNC = "counter/START_ASYNC" as const;
-const END_ASYNC = "counter/END_ASYNC" as const;
-
-export const increase = () => ({
-  type: INCREASE,
-});
-
-export const decrease = () => ({
-  type: DECREASE,
-});
-
-export const increaseBy = (diff: number) => ({
-  type: INCREASE_BY,
-  payload: diff,
-});
-
-export const decreaseBy = (diff: number) => ({
-  type: DECREASE_BY,
-  payload: diff,
-});
-
-export const increaseByAsync = (diff: number) => ({
-  type: INCREASE_BY_ASYNC,
-  payload: diff,
-});
-
-export const decreaseByAsync = (diff: number) => ({
-  type: DECREASE_BY_ASYNC,
-  payload: diff,
-});
-
-export const startAsync = () => ({
-  type: START_ASYNC,
-});
-
-export const endAsync = () => ({
-  type: END_ASYNC,
-});
-
-type CounterAction =
-  | ReturnType<typeof increase>
-  | ReturnType<typeof decrease>
-  | ReturnType<typeof increaseBy>
-  | ReturnType<typeof decreaseBy>
-  | ReturnType<typeof increaseByAsync>
-  | ReturnType<typeof decreaseByAsync>
-  | ReturnType<typeof startAsync>
-  | ReturnType<typeof endAsync>;
-
-const CounterReducer: Reducer<CounterState, CounterAction> = (
-  state = initialState,
-  action: CounterAction
-) => {
-  switch (action.type) {
-    case INCREASE:
-      return { ...state, value: state.value + 1 };
-    case DECREASE:
-      return { ...state, value: state.value - 1 };
-    case INCREASE_BY:
-      console.log(action);
-      return { ...state, value: state.value + action.payload };
-    case DECREASE_BY:
-      return { ...state, value: state.value - action.payload };
-    case START_ASYNC:
-      return { ...state, stauts: "loading" };
-    case END_ASYNC:
-      return { ...state, status: "idle" };
-    default:
-      return state;
+export const increaseByAsync = createAsyncThunk(
+  'counter/increaseByAsync',
+  async(amount:number)=>{
+    const response = await fetchCount(amount);
+    return response.data;
   }
-};
+)
 
-export default CounterReducer;
+export const decreaseByAsync = createAsyncThunk(
+  'counter/decreaseByAsync',
+  async(amount:number)=>{
+    const response = await fetchCount(amount);
+    return response.data;
+  }
+)
+
+const counter = createSlice({
+  name:"counter",
+  initialState,
+  reducers:{
+    increase:(state)=>{
+      state.value  += 1;
+    },
+    decrease:(state)=>{
+      state.value -= 1;
+    },
+    increaseBy:(state, action:PayloadAction<number|string>)=>{
+      state.value += typeof action.payload === "number"? 
+        action.payload: Number(action.payload);
+    },
+    decreaseBy:(state, action:PayloadAction<number|string>)=>{
+      state.value -= typeof action.payload === "number"? 
+        action.payload: Number(action.payload);
+    }
+  },
+  extraReducers:(builder)=>{
+    builder
+    .addCase(increaseByAsync.pending,(state)=>{
+      state.status = 'loading';
+    })
+    .addCase(increaseByAsync.fulfilled,(state, action)=>{
+      state.status='idle';
+      state.value+=action.payload;
+    })
+    .addCase(decreaseByAsync.pending,(state)=>{
+      state.status = 'loading'
+    })
+    .addCase(decreaseByAsync.fulfilled, (state, action)=>{
+      state.status="idle";
+      state.value-=action.payload;
+    })
+  }
+})
+
+export const {
+  increase,
+  decrease,
+  increaseBy,
+  decreaseBy
+} = counter.actions
+
+export default counter.reducer;
